@@ -1,0 +1,161 @@
+:root {
+    /* Oracle Red Bull Racing / Verstappen */
+    --primary-color: #3671C6;   /* Navy Blue 主色 */
+    --secondary-color: #E8002D; /* Racing Red 强调红 */
+    --accent-color: #FFCC00;    /* Cyber Yellow 点缀黄 */
+    --navy-dark: #0A1628;       /* 深海军蓝 背景 */
+    --navy-mid: #001B3D;        /* 中海军蓝 区块 */
+    --light-blue: #4C8BE3;      /* 浅蓝 悬停/高亮 */
+    --silver: #C0BFBF;          /* 银灰 次要文字 */
+    --text-light: #FFFFFF;      /* 浅色文字 */
+    --text-dark: #0A1628;       /* 深色文字 */
+}
+
+@font-face {
+    font-family: "Freshman";
+    src: url("../font/freshman/Freshman.ttf");
+}
+
+@font-face {
+    font-family: "aeromovedemo";
+    src: url("../font/aeromovedemo/AeromoveDemoRegular.ttf");
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+.header {
+    /* border: 2px solid rgb(255, 0, 0); */
+    background-image: linear-gradient(to right, var(--navy-mid), #002b60, var(--primary-color),var(--light-blue));
+}
+
+.header nav ul {
+    /* border: 3px solid blue; */
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header nav ul li {
+    flex: 1;
+}
+
+.header nav ul li:first-child {
+    flex: 4;
+    /* border: 2px solid green; */
+    font-size: 30px;
+}
+
+.header nav ul li img {
+    width: 30%;
+}
+
+.header nav ul li:last-child {
+    /* border: 2px solid rgb(0, 234, 255); */
+    flex: 0;
+}
+
+.header nav ul li a {
+    /* border: 2px solid red; */
+    font-size: 50px;
+    text-decoration: none;
+    color: #FFFFFF;
+    font-family: "aeromovedemo";
+}
+
+.banner {
+    /* background-color: var(--navy-dark); */
+    background-image: linear-gradient(to right, var(--navy-dark), var(--navy-mid), #1b437c,#3471c6);
+    min-height: 100vh;
+    /* background-image: url("../img/test.jpeg"); */
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.banner .fliter {
+    /* border: 2px solid rgb(255, 0, 0); */
+    
+}
+
+.banner-img-max {
+    /* border: 2px solid rgb(255, 255, 255); */
+    position: absolute;
+    width: 45%;
+    left: 4%;
+    top: 1%;
+    z-index: 100;
+}
+
+.banner-img-rb26 {
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    width: 45%;
+    top: 75%;
+    left: 5%;
+    z-index: 50;
+    opacity: 0.9;
+}
+
+.banner-img-people {
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    width: 50%;
+    top: 38%;
+    left: 2%;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.banner .fliter .content .name-first {
+    color: #FFFFFF;
+    font-family: "aeromovedemo";
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    top: 45%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+}
+
+.banner .fliter .content .name-last {
+    color: #FFFFFF;
+    font-family: "aeromovedemo";
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    top: 55%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 150px;
+}
+
+.banner .fliter .content .tag {
+    color: #FFFFFF;
+    font-family: "aeromovedemo";
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    top: 70%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+}
+
+.banner .fliter .content .tag-sub {
+    color: #FFFFFF;
+    font-family: "aeromovedemo";
+    /* border: 2px solid rgb(255, 0, 0); */
+    position: absolute;
+    top: 75%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+}
+
+
