@@ -142,13 +142,11 @@ html {
     /* background-image: url("../img/test.jpeg"); */
     background-position: center;
     background-repeat: no-repeat;
-    /* 裁掉被 transform 移出 banner 的元素，避免撑大页面滚动区域 */
     position: relative;
     overflow: hidden;
     contain: layout paint;
 }
 
-/* 条带独立合成层，减轻 mix-blend-mode 对整页的重绘 */
 .banner-strips {
     position: absolute;
     inset: 0;
@@ -226,9 +224,9 @@ html {
     font-family: "aeromovedemo";
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
-    top: 24vh;
+    top: 23vh;
     left: 84%;
-    font-size: 80px;
+    font-size: 130px;
     z-index: 700;
     animation: inBanner-content 0.55s ease-in-out both;
     will-change: transform;
@@ -242,8 +240,8 @@ html {
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
     top: 32vh;
-    left: 46%;
-    font-size: 120px;
+    left: 42%;
+    font-size: 180px;
     z-index: 700;
     animation: inBanner-content 0.55s ease-in-out both;
     will-change: transform;
@@ -272,7 +270,7 @@ html {
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
     top: 55vh;
-    left: 50%;
+    left: 55%;
     font-size: 30px;
     z-index: 700;
     animation: inBanner-content 0.55s ease-in-out both;
@@ -363,8 +361,6 @@ html {
     animation: bannerImgRight 1.3s ease-out both;
 }
 
-/* 入场结束后必须关掉 animation，否则 fill-mode:both 会锁死 transform
-   选择器优先级需 ≥ 原 animation 规则，否则文字/标题仍被锁住 */
 .banner.anim-done .banner-img-max,
 .banner.anim-done .banner-img-rb26,
 .banner.anim-done .banner-img-people,

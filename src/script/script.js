@@ -19,18 +19,18 @@ var about = document.querySelector(".about");
 let progress = 0;
 var unlocked = false; // 是否解锁
 var animating = false; // 是否正在平滑切换
-var ANIM_DURATION = 900; // 平滑动画时长（毫秒）
+var ANIM_DURATION = 900; // 平滑动画时长
 var insideVisible = false;
 var aboutVisible = false;
 
-function moveStrips(strips, dir, progress) { //背景条带滑动
+function moveStrips(strips, dir, progress) {
     var x = dir * progress * 110;
     strips.forEach((img) => {
         img.style.transform = `translate3d(${x}vw, 0, 0)`;
     });
 }
 
-function scroll(progress) { //首页图像滑动
+function scroll(progress) {
     header.style.transform = `translate3d(0, ${-progress * 140}%, 0)`;
 
     bannerImgMax.style.transform = `translate3d(0, ${progress * 140}vh, 0)`;
@@ -42,14 +42,11 @@ function scroll(progress) { //首页图像滑动
     bannerTag.style.transform = `translate3d(${progress * 80}vw, 0, 0)`;
     bannerTagSub.style.transform = `translate3d(${progress * 80}vw, 0, 0)`;
 
-    // 背景条带：左组向左、右组向右
     moveStrips(bannerStripsLeft, -1, progress);
     moveStrips(bannerStripsRight, 1, progress);
 
-    // 背景渐变随滚动渐渐消失
     fliterBg.style.opacity = String(1 - progress);
 
-    // 只在状态变化时切换 class，避免每帧触发 style recalc
     var showInside = progress >= 1;
     if (insideContent && showInside !== insideVisible) {
         insideVisible = showInside;
@@ -80,12 +77,10 @@ function easeInOutCubic(t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-/** 平滑将 progress 动画到 target（0 或 1） */
 function animateTo(target) {
     if (animating) return;
     animating = true;
 
-    // 提前结束入场动画对 transform 的占用，否则条带/主图滚不动
     if (banner && !banner.classList.contains("anim-done")) {
         banner.classList.add("anim-done");
     }
@@ -120,7 +115,6 @@ function animateTo(target) {
 
 lock();
 
-// 入场动画结束后释放 will-change
 if (banner) {
     window.setTimeout(function () {
         banner.classList.add("anim-done");
@@ -135,7 +129,6 @@ window.addEventListener("wheel", (e) => {
 
         // 已解锁
         if (unlocked) {
-            // 回到页面最顶部且继续上滑 → 重新进入首页动画
             if (window.scrollY <= 0 && e.deltaY < 0) {
                 e.preventDefault();
                 lock();
@@ -144,7 +137,6 @@ window.addEventListener("wheel", (e) => {
             return;
         }
 
-        // 未解锁：滚一下直接平滑切到下一屏 / 上一屏
         e.preventDefault();
         if (e.deltaY > 0) {
             animateTo(1);
@@ -154,3 +146,15 @@ window.addEventListener("wheel", (e) => {
     },
     { passive: false }
 );
+
+
+//  首页导航栏跳转逻辑制作 开始
+
+
+//  首页导航栏跳转逻辑制作 结束
+
+
+
+// 跳转到首页效果制作 开始
+
+// 跳转到首页效果制作 结束
