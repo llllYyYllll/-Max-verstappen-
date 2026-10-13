@@ -21,8 +21,14 @@
     src: url("../font/aeromovedemo/AeromoveDemoRegular.ttf");
 }
 
+@font-face {
+    font-family: "vipnagorgialla";
+    src: url("../font/vipnagorgialla/VIPNagorGothic-Regular.otf");
+}
+
 html {
     scroll-behavior: smooth;
+    overflow: hidden;
 }
 
 * {
@@ -73,8 +79,8 @@ html {
 
 .banner {
     /* background-color: var(--navy-dark); */
-    background-image: linear-gradient(to right, var(--navy-dark), var(--navy-mid), #1b437c,#3471c6);
-    min-height: 100vh;
+    background-image: linear-gradient(to left, var(--navy-dark), var(--navy-mid), #1b437c,#3471c6);
+    min-height: 91vh;
     /* background-image: url("../img/test.jpeg"); */
     background-position: center;
     background-repeat: no-repeat;
@@ -98,18 +104,18 @@ html {
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
     width: 45%;
-    top: 75%;
-    left: 5%;
+    top: 78%;
+    left: 6%;
     z-index: 50;
-    opacity: 0.9;
+    opacity: 0.7;
 }
 
 .banner-img-people {
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
-    width: 50%;
-    top: 38%;
-    left: 2%;
+    width: 53%;
+    top: 44%;
+    left: 1%;
     z-index: 0;
     opacity: 0.4;
 }
@@ -133,12 +139,12 @@ html {
     top: 55%;
     left: 75%;
     transform: translate(-50%, -50%);
-    font-size: 150px;
+    font-size: 120px;
 }
 
 .banner .fliter .content .tag {
     color: #FFFFFF;
-    font-family: "aeromovedemo";
+    font-family: "vipnagorgialla";
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
     top: 70%;
@@ -149,7 +155,7 @@ html {
 
 .banner .fliter .content .tag-sub {
     color: #FFFFFF;
-    font-family: "aeromovedemo";
+    font-family: "vipnagorgialla";
     /* border: 2px solid rgb(255, 0, 0); */
     position: absolute;
     top: 75%;
@@ -157,5 +163,3 @@ html {
     transform: translate(-50%, -50%);
     font-size: 30px;
 }
-
-
