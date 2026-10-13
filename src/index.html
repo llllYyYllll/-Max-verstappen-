@@ -7,24 +7,47 @@
     <link rel="stylesheet" href="./style/style.css">
 </head>
 <body>
-
-    <!-- 头部导航栏 -->
-    <header class="header">
-        <nav>
-            <ul>
-                <li><img src=".\img\verstappen.png" alt=""></li>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><span>test</span></li>
-            </ul>
-        </nav>
-    </header>
     <!-- 首页内容 -->
     <div class="banner">
-        <img src=".\img\banner-max.png" alt="" class="banner-img-max">
-        <img src=".\img\banner-rb26.png" alt="" class="banner-img-rb26">
-        <img src=".\img\banner-people.png" alt="" class="banner-img-people">
+        <!-- 头部导航栏 -->
+        <header class="header">
+            <nav>
+                <ul>
+                    <li><img src=".\img\verstappen.webp" alt=""></li>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><span>test</span></li>
+                </ul>
+            </nav>
+        </header>
+        <div class="fliter-bg"></div>
+        <img src=".\img\banner-max.webp" alt="" class="banner-img-max" fetchpriority="high" decoding="async">
+        <img src=".\img\banner-rb26.webp" alt="" class="banner-img-rb26" decoding="async">
+        <img src=".\img\banner-people.webp" alt="" class="banner-img-people" decoding="async">
+
+        <div class="banner-strips" aria-hidden="true">
+            <img src="./img/3logo/13.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <img src="./img/3logo/1.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <img src="./img/3logo/2.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <img src="./img/3logo/3.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <img src="./img/3logo/4.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <img src="./img/3logo/5.webp" alt="" class="banner-img-background bannerImgLeft" decoding="async">
+            <!-- <img src="./img/3logo/6.png" alt="" class="banner-img-background"> -->
+            <img src="./img/3logo/7.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+            <img src="./img/3logo/8.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+            <img src="./img/3logo/9.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+            <img src="./img/3logo/10.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+            <img src="./img/3logo/12.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+            <img src="./img/3logo/11.webp" alt="" class="banner-img-background bannerImgRight" decoding="async">
+        </div>
+
+        <div class="inside-content">
+            <span>“We all know he’s on another level, he’s a generational talent, while the others are simply very good drivers.”</span><br>
+            <span>— Fernando Alonso</span>
+        </div>
+        
+
         <div class="fliter">
             <div class="content">
                 <div class="name-first">Max</div>
@@ -35,8 +58,16 @@
         </div>
     </div>
 
+
+    <div class="about">
+        <div class="content_01">
+            <p><span>Max Emilian Verstappen</span> (born 30 September 1997) is a Dutch and Belgian racing driver who competes under the Dutch flag in Formula One for Red Bull Racing. A four-time World Drivers' Champion (2021–2024), he is widely regarded as one of the greatest drivers of his generation—and among the fastest ever to race in Formula One.</p>
+        </div>
+        <img src="./img/about_img_01.webp" alt="">
+    </div>
+
 </body>
-    <script src="./script.js"></script>
+    <script src="./script/script.js"></script>
 </html>
 
 
