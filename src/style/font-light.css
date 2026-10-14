@@ -1,0 +1,39 @@
+.headline {
+    --gy: 50vh;
+
+    background-image: radial-gradient(in oklch circle at 50% var(--gy),
+            oklch(65.201% 0.23447 29.883) 10vh,
+            oklch(56.347% 0.24089 260.834) 50vh,
+            oklch(78.558% 0.14794 224.301) 90vh,
+            oklch(0% 0 0) 150vh);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    text-shadow: none !important;
+
+    filter: drop-shadow(0 0 30px oklch(0.7 0.25 20 / 0.15));
+}
+
+section:nth-child(2) .headline {
+    background-image: radial-gradient(in oklch circle at 50% var(--gy),
+            oklch(0.95 0.12 200) 0vh,
+            oklch(0.75 0.25 220) 50vh,
+            oklch(0.40 0.20 280) 90vh,
+            oklch(0.15 0.08 260 / 0) 150vh);
+}
+
+section:nth-child(3) .headline {
+    background-image: radial-gradient(in oklch circle at 50% var(--gy),
+            oklch(0.94 0.16 110) 0vh,
+            oklch(0.78 0.24 60) 50vh,
+            oklch(0.45 0.22 25) 90vh,
+            oklch(0.18 0.08 350 / 0) 150vh);
+}
+
+section:nth-child(4) .headline {
+    background-image: radial-gradient(in oklch circle at 50% var(--gy),
+            oklch(0.93 0.14 320) 0vh,
+            oklch(0.70 0.28 340) 50vh,
+            oklch(0.38 0.22 295) 90vh,
+            oklch(0.15 0.08 290 / 0) 150vh);
+}
