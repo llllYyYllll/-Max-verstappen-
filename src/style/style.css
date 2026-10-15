@@ -220,7 +220,7 @@ html {
     background-image:
         linear-gradient(
             to bottom right,
-            rgba(4, 10, 20, 0.55) 0%,
+            rgba(63, 134, 255, 0.55) 0%,
             rgba(6, 14, 28, 0.28) 42%,
             rgba(8, 22, 42, 0.08) 72%,
             rgba(16, 40, 72, 0) 90%
@@ -311,7 +311,6 @@ html {
     text-shadow: 14px 8px 15px rgba(0, 0, 0, 0.8);
 } */
 
-/* 背景条纹：上下各一张整图，黑色底由 screen 混合成透明 */
 .banner-img-background {
     position: absolute;
     width: 100%;
@@ -386,6 +385,18 @@ html {
 
 /* ---------------------------------------------HG--------------------------------------------- */
 
+
+
+/* history */
+.history {
+    /* border: 2px solid rgb(255, 0, 0); */
+    display: grid;
+    
+}
+
+
+/* history */
+
 /* ========== is-exited 退场状态 ========== */
 .banner.is-exited .header {
     transform: translateY(-140%);
@@ -428,5 +439,145 @@ html {
 .banner.is-exited .inside-content {
     opacity: 1;
     transition: opacity 0.6s ease 0.4s;
+}
+
+
+/* history */
+.history_title {
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--navy-dark);
+    color: var(--text-light);
+    border: 2px solid rgb(255, 0, 0);
+}
+
+.section3 {
+    max-width: 100%;
+    min-width: var(--my-min-size);
+    background-color: var(--navy-dark);
+    padding-bottom: 50px;
+}
+
+.section3 .s3-content {
+    width: 60%;
+    margin: 0px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 23px;
+    color: var(--text-light);
+}
+
+.section3 .s3-content div img {
+    width: 100%;
+}
+
+.section3 .s3-content div:nth-of-type(3) {
+    order: 2;
+}
+
+.section3 .s3-content div:nth-of-type(5),
+.section3 .s3-content div:nth-of-type(6),
+.section3 .s3-content div:nth-of-type(8) {
+    order: 3;
+}
+
+.section3 .s3-content div:nth-of-type(7) {
+    order: 4;
+}
+
+/* odd奇数个 even偶数个 */
+.section3 .s3-content div:nth-of-type(even) {
+    background-color: rgba(63, 102, 255, 0.091);
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.section3 .s3-content div:nth-of-type(even) h1 {
+    font-size: 30px;
+    font-weight: lighter;
+    color: var(--my-font-color);
+    box-sizing: border-box;
+    padding: 10px 0px;
+}
+
+.section3 .s3-content div:nth-of-type(even) p {
+    font-size: 18px;
+    font-weight: lighter;
+    font-family: "微软雅黑";
+    color: var(--my-text-color);
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    width: 100%;
+    height: auto;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -moz-line-clamp: 2;
+    -o-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 2em;
+    max-height: calc(2em * 2);
+}
+
+
+
+/* rb26 3D 模型区域 */
+
+/* 玻璃门：覆盖在 3D 画布上方，点击后向两侧滑开，再点合上 */
+.glass_01,
+.glass_02 {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+}
+
+/* 右侧玻璃 */
+.glass_01 {
+    left: 50%;
+    border-left: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* 左侧玻璃 */
+.glass_02 {
+    left: 0;
+    border-right: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* 打开：左右玻璃移出视野 */
+.module.is-glass-open .glass_01 {
+    transform: translateX(100%);
+}
+
+.module.is-glass-open .glass_02 {
+    transform: translateX(-100%);
+}
+
+.module {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #00ccff;
+}
+
+.module .webgl {
+    display: block;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    position: relative;
+    z-index: 1;
 }
 

@@ -58,3 +58,23 @@ window.addEventListener("wheel", (e) => {
         BannerExited(false)
     }
 })
+
+// module 玻璃门：单击开合（拖拽旋转模型不触发）
+var moduleEl = document.querySelector(".module")
+if (moduleEl) {
+    var glassPointer = { x: 0, y: 0 }
+
+    moduleEl.addEventListener("pointerdown", function (e) {
+        glassPointer.x = e.clientX
+        glassPointer.y = e.clientY
+    })
+
+    moduleEl.addEventListener("pointerup", function (e) {
+        var dx = Math.abs(e.clientX - glassPointer.x)
+        var dy = Math.abs(e.clientY - glassPointer.y)
+        // 位移很小视为点击，而非拖拽
+        if (dx < 5 && dy < 5) {
+            moduleEl.classList.toggle("is-glass-open")
+        }
+    })
+}
