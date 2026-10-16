@@ -78,3 +78,58 @@ if (moduleEl) {
         }
     })
 }
+
+// 轮播效果JS
+var carouselBox = $('.carousel-box');
+var imgs = carouselBox[0].$('img');
+var carouselList = $('.carousel-list');
+var listImgs = carouselList[0].$('img');
+var btnPrev = carouselBox[0].$('.btn-prev')[0];
+var btnNext = carouselBox[0].$('.btn-next')[0];
+var currentIndex = 0;
+var totalImage = imgs.length;
+var timer = null;
+var interval = 3500;
+var isRunning = false;
+var animationTime = 1500;
+btnPrev.addEventListener('click', showPrev)
+btnNext.addEventListener('click', showNext)
+
+function showPrev() {
+    throthling(-1)
+}
+function showNext() {
+    throthling(1)
+}
+function switchImage(tag) {
+    var nextIndex = (currentIndex + tag + totalImage) % totalImage;
+    var currentImg = imgs[currentIndex];
+    function str(param) {
+        return param === -1 ? '2' : '';
+    }
+    for (var i = 0; i < totalImage; i++) {
+        imgs[i].classList.remove('active');
+        imgs[i].classList.remove('active2');
+        imgs[i].classList.remove('prev');
+        imgs[i].classList.remove('prev2');
+        listImgs[i].classList.remove('active');
+    }
+    currentImg.classList.add('prev' + str(tag));
+    imgs[nextIndex].classList.add('active' + str(tag));
+    listImgs[nextIndex].classList.add('active');
+    currentIndex = nextIndex;
+}
+timer = setInterval(showNext,interval);
+function throthling(tag) {
+    if (isRunning) return;
+    switchImage(tag);
+    clearInterval(timer);
+    timer = setInterval(showNext,interval);
+    isRunning = true;
+    setTimeout(function() {
+        isRunning = false;
+    },animationTime)
+}
+
+imgs[0].classList.add('active');
+listImgs[0].classList.add('active');
