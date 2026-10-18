@@ -74,62 +74,66 @@ if (moduleEl) {
         var dy = Math.abs(e.clientY - glassPointer.y)
         // 位移很小视为点击，而非拖拽
         if (dx < 5 && dy < 5) {
+            // 玻璃关闭时：点玻璃开启；打开后：点空白可合拢（拖拽模型不触发）
+            var onGlass = e.target.closest(".glass_01, .glass_02")
+            var isOpen = moduleEl.classList.contains("is-glass-open")
+            if (!isOpen && !onGlass) return
             moduleEl.classList.toggle("is-glass-open")
         }
     })
 }
 
-// 轮播效果JS
-var carouselBox = $('.carousel-box');
-var imgs = carouselBox[0].$('img');
-var carouselList = $('.carousel-list');
-var listImgs = carouselList[0].$('img');
-var btnPrev = carouselBox[0].$('.btn-prev')[0];
-var btnNext = carouselBox[0].$('.btn-next')[0];
-var currentIndex = 0;
-var totalImage = imgs.length;
-var timer = null;
-var interval = 3500;
-var isRunning = false;
-var animationTime = 1500;
-btnPrev.addEventListener('click', showPrev)
-btnNext.addEventListener('click', showNext)
+// 轮播效果JS（原生 DOM，不依赖 jQuery）
+var carouselBox = document.querySelector('.carousel-box')
+var carouselList = document.querySelector('.carousel-list')
+if (carouselBox && carouselList) {
+    var imgs = carouselBox.querySelectorAll('img')
+    var listImgs = carouselList.querySelectorAll('img')
+    var btnPrev = carouselBox.querySelector('.btn-prev')
+    var btnNext = carouselBox.querySelector('.btn-next')
+    var currentIndex = 0
+    var totalImage = imgs.length
+    var timer = null
+    var interval = 3500
+    var isRunning = false
+    var animationTime = 1500
 
-function showPrev() {
-    throthling(-1)
-}
-function showNext() {
-    throthling(1)
-}
-function switchImage(tag) {
-    var nextIndex = (currentIndex + tag + totalImage) % totalImage;
-    var currentImg = imgs[currentIndex];
-    function str(param) {
-        return param === -1 ? '2' : '';
+    function showPrev() {
+        throthling(-1)
     }
-    for (var i = 0; i < totalImage; i++) {
-        imgs[i].classList.remove('active');
-        imgs[i].classList.remove('active2');
-        imgs[i].classList.remove('prev');
-        imgs[i].classList.remove('prev2');
-        listImgs[i].classList.remove('active');
+    function showNext() {
+        throthling(1)
     }
-    currentImg.classList.add('prev' + str(tag));
-    imgs[nextIndex].classList.add('active' + str(tag));
-    listImgs[nextIndex].classList.add('active');
-    currentIndex = nextIndex;
-}
-timer = setInterval(showNext,interval);
-function throthling(tag) {
-    if (isRunning) return;
-    switchImage(tag);
-    clearInterval(timer);
-    timer = setInterval(showNext,interval);
-    isRunning = true;
-    setTimeout(function() {
-        isRunning = false;
-    },animationTime)
-}
+    function switchImage(tag) {
+        var nextIndex = (currentIndex + tag + totalImage) % totalImage
+        var currentImg = imgs[currentIndex]
+        function str(param) {
+            return param === -1 ? '2' : ''
+        }
+        for (var i = 0; i < totalImage; i++) {
+            imgs[i].classList.remove('active', 'active2', 'prev', 'prev2')
+            listImgs[i].classList.remove('active')
+        }
+        currentImg.classList.add('prev' + str(tag))
+        imgs[nextIndex].classList.add('active' + str(tag))
+        listImgs[nextIndex].classList.add('active')
+        currentIndex = nextIndex
+    }
+    function throthling(tag) {
+        if (isRunning) return
+        switchImage(tag)
+        clearInterval(timer)
+        timer = setInterval(showNext, interval)
+        isRunning = true
+        setTimeout(function () {
+            isRunning = false
+        }, animationTime)
+    }
 
-imgs[0].classList.add('active');
-listImgs[0].classList.add('active');
+    if (btnPrev) btnPrev.addEventListener('click', showPrev)
+    if (btnNext) btnNext.addEventListener('click', showNext)
+
+    imgs[0].classList.add('active')
+    listImgs[0].classList.add('active')
+    timer = setInterval(showNext, interval)
+}

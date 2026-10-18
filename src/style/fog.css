@@ -5,8 +5,7 @@ body {
 }
 
 body {
-    background: #000;
-    background: rgba(0, 0, 0, 1);
+    background: var(--navy-dark, #0A1628);
     overflow-x: hidden;
 }
 
