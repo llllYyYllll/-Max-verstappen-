@@ -10,6 +10,10 @@
     /* 深海军蓝 背景 */
     --navy-mid: #001B3D;
     /* 中海军蓝 区块 */
+    --navy-lift: #0c1a32;
+    /* 区块中段微抬升 */
+    --page-bg: #0A1628;
+    /* 全站内容区统一底色，接缝同色无黑带 */
     --light-blue: #4C8BE3;
     /* 浅蓝 悬停/高亮 */
     --silver: #C0BFBF;
@@ -18,6 +22,11 @@
     /* 浅色文字 */
     --text-dark: #0A1628;
     /* 深色文字 */
+
+    --glow-blue: rgba(54, 113, 198, 0.28);
+    --glow-blue-soft: rgba(80, 140, 220, 0.16);
+    --glow-gold: rgba(255, 204, 0, 0.18);
+    --edge-light: rgba(180, 220, 255, 0.35);
 
     /* 首页退场：由 .banner.is-exited 触发，JS 只负责开关 class */
     --banner-exit-duration: 900ms;
@@ -176,16 +185,18 @@ html {
 }
 
 .banner {
-    /* background-color: var(--navy-dark); */
+    /* 品牌蓝横向渐变；底部淡入 #122848，与 .about 顶部同色，无黑带 */
     background-image:
-        linear-gradient(180deg, transparent 78%, var(--navy-dark) 100%),
+        linear-gradient(
+            180deg,
+            transparent 58%,
+            rgba(18, 40, 72, 0.55) 80%,
+            #122848 100%
+        ),
         linear-gradient(to left, var(--navy-dark), var(--navy-mid), #1b437c, #3471c6);
-    /* background-color: var(--navy-dark); */
     min-height: 110vh;
-    /* background-image: url("../img/test.jpeg"); */
     background-position: center;
     background-repeat: no-repeat;
-    /* 裁掉被 transform 移出 banner 的元素，避免撑大页面滚动区域 */
     position: relative;
     overflow: hidden;
     border: none;
@@ -239,20 +250,21 @@ html {
             rgba(63, 134, 255, 0.55) 0%,
             rgba(6, 14, 28, 0.28) 42%,
             rgba(8, 22, 42, 0.08) 72%,
-            rgba(16, 40, 72, 0) 90%),
-        linear-gradient(to right,
+            rgba(16, 40, 72, 0) 90%
+        ),
+        linear-gradient(
+            to right,
             rgba(4, 10, 20, 0.72) 0%,
             rgba(6, 14, 28, 0.55) 32%,
             rgba(8, 22, 42, 0.28) 58%,
             rgba(12, 32, 58, 0.08) 80%,
-            rgba(16, 40, 72, 0) 90%);
-    /* border: 2px solid rgb(255, 0, 0); */
+            rgba(16, 40, 72, 0) 90%
+        );
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     z-index: 1;
-    /* opacity: 0.8; */
     pointer-events: none;
     transition: opacity var(--banner-exit-duration) var(--banner-exit-ease);
 }
@@ -335,6 +347,9 @@ html {
     z-index: 0;
     pointer-events: none;
     transition: transform var(--banner-exit-duration) var(--banner-exit-ease);
+    /* 底部淡出，让条纹不挡 banner → about 的渐变衔接 */
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
 }
 
 .bannerImgLeft {
@@ -369,18 +384,24 @@ html {
 
 /* ---------------------------------------------HG--------------------------------------------- */
 .about {
-    /* border: 2px solid rgb(255, 0, 0); */
+    position: relative;
     min-height: 100vh;
     align-items: center;
     justify-items: center;
-    background: var(--navy-dark);
     color: var(--text-light);
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     gap: 48px 100px;
     padding: 9% 8% 9% 8%;
-    background-image: radial-gradient(at top left, var(--primary-color) 0.05%, var(--navy-dark), var(--navy-dark));
+    isolation: isolate;
+    /* 顶部承接 banner 余蓝，再回到统一 page-bg */
+    background: linear-gradient(
+        180deg,
+        #122848 0%,
+        var(--page-bg) 22%,
+        var(--page-bg) 100%
+    );
     border: none;
 }
 
@@ -389,26 +410,21 @@ html {
 
 
 .about .content_01 {
-    /* flex: 1 1 420px; */
     max-width: 850px;
-
-    /* border: #ff17a2 2px solid; */
-    /* text-shadow: var(--silver) 2px 1px 1px; */
     font-family: "kaluk", sans-serif;
     font-size: 20px;
     line-height: 1.75;
     color: var(--text-light);
-
-
     background: rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(50px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(180, 210, 255, 0.2);
     border-radius: 12px;
     padding: 24px;
-    box-shadow: 0 4px 20px rgba(22, 22, 22, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.12);
-
-
+    box-shadow:
+        0 0 40px rgba(54, 113, 198, 0.12),
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        inset 0 1px 1px rgba(255, 255, 255, 0.14);
 }
 
 em {
@@ -500,17 +516,13 @@ em {
 }
 
 .section3 {
+    position: relative;
     max-width: 100%;
     min-width: var(--my-min-size);
-    background:
-        radial-gradient(at top right, rgba(54, 113, 198, 0.22) 0%, transparent 55%),
-        radial-gradient(at bottom left, rgba(232, 0, 45, 0.10) 0%, transparent 50%),
-        var(--navy-dark);
+    background: var(--page-bg);
     padding: 48px 0 130px;
     overflow: visible;
     border: none;
-    /* 底部淡入同色，避免与 module 交界出现硬线 */
-    box-shadow: 0 48px 48px -24px var(--navy-dark);
 }
 
 .section3-head {
@@ -524,7 +536,7 @@ em {
     letter-spacing: 8px;
     color: var(--accent-color);
     font-size: 16px;
-    /* border: 2px solid rgb(140, 0, 0); */
+    text-shadow: 0 0 24px var(--glow-gold);
 }
 
 .section3-head h2 {
@@ -1061,23 +1073,18 @@ em {
     overflow: hidden;
     border: none;
     outline: none;
-    /* 上下缘纯 navy-dark，与相邻区块无色差接缝 */
-    background:
-        radial-gradient(ellipse 90% 55% at 50% 50%, rgba(80, 140, 220, 0.28) 0%, transparent 62%),
-        linear-gradient(
-            180deg,
-            var(--navy-dark) 0%,
-            #0c1a32 14%,
-            #122848 28%,
-            #183868 42%,
-            #1e4a88 58%,
-            #1a3f78 72%,
-            #123058 86%,
-            var(--navy-dark) 100%
-        );
+    /* 简单纵向渐变，两端与 page-bg 同色 */
+    background: linear-gradient(
+        180deg,
+        var(--page-bg) 0%,
+        #122848 35%,
+        #183868 55%,
+        #122848 75%,
+        var(--page-bg) 100%
+    );
 }
 
-/* 仅内部柔化，不画描边，避免与上下页面形成分界线 */
+/* 玻璃门区域上下柔化 */
 .module::before {
     content: "";
     position: absolute;
@@ -1085,9 +1092,9 @@ em {
     z-index: 4;
     pointer-events: none;
     background:
-        linear-gradient(180deg, var(--navy-dark) 0%, transparent 9%),
-        linear-gradient(0deg, var(--navy-dark) 0%, transparent 9%);
-    opacity: 0.85;
+        linear-gradient(180deg, var(--page-bg) 0%, transparent 14%),
+        linear-gradient(0deg, var(--page-bg) 0%, transparent 14%);
+    opacity: 0.9;
     transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -1447,10 +1454,8 @@ em {
 .section-lun {
     position: relative;
     color: var(--navy-mid);
-    background:
-        radial-gradient(ellipse 70% 45% at 50% 0%, rgba(54, 113, 198, 0.22) 0%, transparent 60%),
-        var(--navy-dark);
-    box-shadow: 0 -48px 48px -24px var(--navy-dark);
+    isolation: isolate;
+    background: var(--page-bg);
     padding: 56px 0 72px;
     overflow: hidden;
 }
@@ -1466,6 +1471,7 @@ em {
     letter-spacing: 8px;
     color: var(--accent-color);
     font-size: 16px;
+    text-shadow: 0 0 24px var(--glow-gold);
 }
 
 .section-lun-head h2 {
@@ -1500,8 +1506,26 @@ em {
     background:
         linear-gradient(160deg, rgba(18, 40, 72, 0.95), rgba(10, 22, 40, 0.98));
     box-shadow:
-        inset 0 0 0 1px rgba(180, 210, 255, 0.14),
+        inset 0 0 0 1px rgba(180, 210, 255, 0.16),
+        0 0 48px rgba(54, 113, 198, 0.14),
         0 24px 48px rgba(0, 0, 0, 0.35);
+}
+
+.carousel .carousel-box::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent 8%,
+        rgba(180, 220, 255, 0.45) 40%,
+        rgba(255, 204, 0, 0.35) 50%,
+        rgba(180, 220, 255, 0.45) 60%,
+        transparent 92%
+    );
 }
 
 /* 主图底部柔化，衔接缩略图 */
@@ -1758,10 +1782,8 @@ em {
     position: relative;
     overflow: hidden;
     padding: 72px 24px 48px;
-    background:
-        radial-gradient(ellipse 80% 60% at 50% 120%, rgba(54, 113, 198, 0.35) 0%, transparent 55%),
-        linear-gradient(180deg, var(--navy-dark) 0%, #07111f 42%, #0c1e38 100%);
-    border-top: 1px solid rgba(180, 210, 255, 0.1);
+    background: linear-gradient(180deg, var(--page-bg) 0%, #07111f 100%);
+    border-top: 1px solid rgba(180, 210, 255, 0.08);
 }
 
 .site-footer::before {
@@ -1775,9 +1797,12 @@ em {
     background: linear-gradient(
         90deg,
         transparent,
+        rgba(180, 220, 255, 0.35),
         rgba(255, 204, 0, 0.55),
+        rgba(180, 220, 255, 0.35),
         transparent
     );
+    box-shadow: 0 0 24px rgba(255, 204, 0, 0.25);
 }
 
 .site-footer__inner {

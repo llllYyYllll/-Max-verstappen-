@@ -1,0 +1,325 @@
+/* @font-face kit by Fonts2u (https://fonts2u.com) */
+@font-face {
+    font-family: "SteelfishRg-Bold";
+    src:
+        url("https://raw.githubusercontent.com/cbolson/icodethis-challenges/main/assets/fonts/SteelfishRg-Bold/steelfish_bd.eot?") format("eot"),
+        url("https://raw.githubusercontent.com/cbolson/icodethis-challenges/main/assets/fonts/SteelfishRg-Bold/steelfish_bd.woff") format("woff"),
+        url("https://raw.githubusercontent.com/cbolson/icodethis-challenges/main/assets/fonts/SteelfishRg-Bold/steelfish_bd.ttf") format("truetype"),
+        url("https://raw.githubusercontent.com/cbolson/icodethis-challenges/main/assets/fonts/SteelfishRg-Bold/steelfish_bd.svg#SteelfishRg-Bold") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.race-time-section {
+    --race-primary: var(--primary-color, #3671c6);
+    --race-accent: var(--accent-color, #ffcc00);
+    --race-navy: var(--navy-dark, #0a1628);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 4.5rem 1.25rem 5rem;
+    overflow: hidden;
+    isolation: isolate;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+.race-time-section__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 56rem;
+    margin: 0 auto;
+}
+
+.race-time-section__head {
+    text-align: center;
+    margin-bottom: 1.75rem;
+}
+
+.race-time-section__kicker {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: var(--race-accent);
+    font-family: "vipnagorgialla", system-ui, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-shadow: 0 0 24px rgba(255, 204, 0, 0.35);
+}
+
+.race-time-section__heading {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-family: "vipnagorgialla", system-ui, sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    letter-spacing: 0.04em;
+    font-weight: lighter;
+}
+
+.race-time {
+    font-family: "SteelfishRg-Bold", Impact, sans-serif;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1.75rem 1.5rem 2rem;
+    /* 玻璃深色卡，用边光代替实心主蓝块 */
+    background:
+        linear-gradient(
+            160deg,
+            rgba(18, 48, 92, 0.55) 0%,
+            rgba(10, 22, 40, 0.92) 48%,
+            rgba(8, 18, 34, 0.96) 100%
+        );
+    border: 1px solid rgba(255, 204, 0, 0.28);
+    border-radius: 0.75rem;
+    box-shadow:
+        0 0 0 1px rgba(120, 180, 255, 0.12) inset,
+        0 0 48px rgba(54, 113, 198, 0.22),
+        0 24px 48px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* 卡片内顶缘冷光 */
+.race-time::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 5%,
+        rgba(180, 220, 255, 0.55) 35%,
+        rgba(255, 204, 0, 0.45) 50%,
+        rgba(180, 220, 255, 0.55) 65%,
+        transparent 95%
+    );
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+/* 卡片内环境光斑 */
+.race-time::after {
+    content: "";
+    position: absolute;
+    top: -40%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translateX(-50%);
+    background: radial-gradient(
+        ellipse at center,
+        rgba(54, 113, 198, 0.28) 0%,
+        transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.race-time > * {
+    position: relative;
+    z-index: 1;
+}
+
+.race-time__title {
+    margin: 0 0 0.75rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: clamp(1.75rem, 5vw, 3.25rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: normal;
+    text-shadow: 0 0 32px rgba(54, 113, 198, 0.45);
+}
+
+.race-time__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem 0.5rem;
+    margin-bottom: 1.25rem;
+    color: rgba(220, 230, 245, 0.72);
+    font-family: system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 300;
+    line-height: 1.4;
+    min-height: 1.25rem;
+}
+
+.race-time__meta > div:not(:empty):not(:last-child)::after {
+    content: "-";
+    margin-left: 0.5rem;
+    opacity: 0.7;
+}
+
+.race-time__digits {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+.race-time__digits[hidden],
+.race-time__past[hidden] {
+    display: none !important;
+}
+
+.race-time__past {
+    min-height: 8rem;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 500px) {
+    .race-time__digits {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+}
+
+.race-time__digits > div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    padding: 0.5rem;
+    background:
+        linear-gradient(160deg, rgba(20, 42, 78, 0.85) 0%, rgba(4, 10, 20, 0.92) 100%);
+    border: 1px solid rgba(140, 190, 255, 0.28);
+    border-radius: 0.35rem;
+    box-shadow:
+        0 0 24px rgba(54, 113, 198, 0.18),
+        0 10px 24px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    color: var(--race-accent);
+    font-size: clamp(2rem, 8vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    overflow: hidden;
+    isolation: isolate;
+    box-sizing: border-box;
+    text-shadow:
+        0 0 18px rgba(255, 204, 0, 0.45),
+        0 0 40px rgba(255, 204, 0, 0.18);
+}
+
+.race-time__digits > div::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        125deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 42%,
+        transparent 100%
+    );
+    pointer-events: none;
+    z-index: 0;
+}
+
+.race-time__digits > div::after {
+    content: attr(data-desc);
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    opacity: 0.7;
+    text-shadow: none;
+    z-index: 1;
+}
+
+.race-time__select {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+    gap: 0.55rem;
+    margin-top: 1.25rem;
+}
+
+.race-time__select-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    padding: 0.65rem 0.7rem;
+    border: 1px solid rgba(140, 190, 255, 0.16);
+    border-radius: 0.45rem;
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.85);
+    font-family: system-ui, sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.15s ease;
+}
+
+.race-time__select-btn:hover {
+    background: rgba(54, 113, 198, 0.18);
+    border-color: rgba(255, 204, 0, 0.4);
+    box-shadow: 0 0 20px rgba(54, 113, 198, 0.2);
+}
+
+.race-time__select-btn.is-active {
+    background: linear-gradient(
+        160deg,
+        rgba(54, 113, 198, 0.45) 0%,
+        rgba(20, 42, 78, 0.7) 100%
+    );
+    border-color: var(--race-accent);
+    box-shadow:
+        0 0 0 1px rgba(255, 204, 0, 0.2),
+        0 0 28px rgba(54, 113, 198, 0.35);
+}
+
+.race-time__select-btn.is-past {
+    opacity: 0.55;
+}
+
+.race-time__select-btn.is-past.is-active {
+    opacity: 0.85;
+}
+
+.race-time__select-round {
+    color: var(--race-accent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.race-time__select-name {
+    font-size: 0.82rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.race-time__select-date {
+    font-size: 0.72rem;
+    opacity: 0.65;
+}
+
+@media (min-width: 640px) {
+    .race-time {
+        padding: 2rem 2.25rem 2.5rem;
+    }
+
+    .race-time__digits > div::after {
+        bottom: auto;
+        top: 50%;
+        left: 0.85rem;
+        font-size: 1.15rem;
+        transform: translateY(-50%) rotate(-90deg);
+        transform-origin: left center;
+    }
+}

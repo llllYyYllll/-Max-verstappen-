@@ -5,7 +5,7 @@ body {
 }
 
 body {
-    background: var(--navy-dark, #0A1628);
+    background: var(--page-bg, var(--navy-dark, #0A1628));
     overflow-x: hidden;
 }
 

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./style/fog.css">
     <link rel="stylesheet" href="./style/font-light.css">
     <link rel="stylesheet" href="./style/history.css">
+    <link rel="stylesheet" href="./style/F1Race2026.css">
 
     <!-- <link rel="stylesheet" href="./style/boostrap.css"> -->
     <!-- <script src="./script/jquery.js"></script> -->
@@ -362,12 +363,39 @@
     </div>
 
 
-    <!-- 第二部分： 列表效果制作 开始 -->
-    <!-- <div>
+    <!-- 比赛和倒计时 -->
+    <section class="race-time-section" id="race-countdown">
+        <div class="race-time-section__inner">
+            <div class="race-time-section__head">
+                <span class="race-time-section__kicker">2026 SEASON</span>
+                <h2 class="race-time-section__heading headline">Race Countdown</h2>
+            </div>
 
-    </div> -->
-    <!-- 第二部分： 列表效果制作 结束 -->
+            <div class="race-time">
+                <h3 class="race-time__title">Race time...</h3>
+                <div class="race-time__meta">
+                    <div id="race-country"></div>
+                    <div id="race-name"></div>
+                    <div id="race-date"></div>
+                    <div id="race-time"></div>
+                </div>
 
+                <!-- 未开始：倒计时 -->
+                <div class="race-time__digits" id="race-countdown-panel">
+                    <div id="days" data-desc="Days">00</div>
+                    <div id="hours" data-desc="Hours">00</div>
+                    <div id="minutes" data-desc="Minutes">00</div>
+                    <div id="seconds" data-desc="seconds">00</div>
+                </div>
+
+                <!-- 已结束：先空着，后续可放其他内容 -->
+                <div class="race-time__past" id="race-past-panel" hidden></div>
+            </div>
+
+            <div class="race-time__select" id="race-select" aria-label="Select Grand Prix"></div>
+        </div>
+    </section>
+    <!-- 比赛倒计时结束 -->
 
     <!-- 第三部分： 轮播效果制作 开始 -->
     <div class="section-lun">
@@ -425,12 +453,13 @@
 
 
 
-</body>
 <script src="./script/script.js"></script>
 <script type="module" src="./script/font-light.js"></script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="./script/history.js"></script>
 <script type="module" src="./script/rb26.js"></script>
 <script src="./script/hg.js"></script>
+<script src="./script/F1Race2026.js"></script>
+</body>
 
 </html>
