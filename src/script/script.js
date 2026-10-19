@@ -83,7 +83,7 @@ if (moduleEl) {
     })
 }
 
-// 轮播效果JS（原生 DOM，不依赖 jQuery）
+// 轮播效果JS（原生 DOM；图片由 ajax-loader 靠近时再赋 src）
 var carouselBox = document.querySelector('.carousel-box')
 var carouselList = document.querySelector('.carousel-list')
 if (carouselBox && carouselList) {
@@ -91,49 +91,135 @@ if (carouselBox && carouselList) {
     var listImgs = carouselList.querySelectorAll('img')
     var btnPrev = carouselBox.querySelector('.btn-prev')
     var btnNext = carouselBox.querySelector('.btn-next')
+    var carouselRoot = carouselBox.closest('.carousel') || carouselBox
+    var sectionLun = carouselBox.closest('.section-lun')
     var currentIndex = 0
     var totalImage = imgs.length
     var timer = null
     var interval = 3500
     var isRunning = false
-    var animationTime = 1500
+    var isHovering = false
+    var isInView = false
+    var started = false
+    var animationTime = 850
+    var animClasses = ['active', 'active2', 'prev', 'prev2', 'is-current']
+
+    function clearAnimClasses(el) {
+        animClasses.forEach(function (c) {
+            el.classList.remove(c)
+        })
+    }
+
+    function syncThumbs(index) {
+        for (var i = 0; i < listImgs.length; i++) {
+            listImgs[i].classList.toggle('active', i === index)
+        }
+    }
+
+    function settleCurrent(index) {
+        for (var i = 0; i < totalImage; i++) {
+            clearAnimClasses(imgs[i])
+        }
+        imgs[index].classList.add('is-current')
+        syncThumbs(index)
+        currentIndex = index
+        isRunning = false
+    }
+
+    function startAutoplay() {
+        clearInterval(timer)
+        if (!isHovering && isInView) timer = setInterval(showNext, interval)
+    }
+
+    function stopAutoplay() {
+        clearInterval(timer)
+        timer = null
+    }
+
+    function goTo(index, direction) {
+        if (isRunning || totalImage === 0) return
+        index = ((index % totalImage) + totalImage) % totalImage
+        if (index === currentIndex) return
+
+        var from = currentIndex
+        var dir = direction != null ? direction : (index > from ? 1 : -1)
+        // 环绕时按最短视觉方向：末→首 用 next，首→末 用 prev
+        if (direction == null && Math.abs(index - from) > totalImage / 2) {
+            dir = index > from ? -1 : 1
+        }
+        var suffix = dir < 0 ? '2' : ''
+
+        isRunning = true
+        clearInterval(timer)
+
+        for (var i = 0; i < totalImage; i++) {
+            clearAnimClasses(imgs[i])
+        }
+        // 强制重排，确保同向连续切换时动画能重新触发
+        void carouselBox.offsetWidth
+
+        imgs[from].classList.add('prev' + suffix)
+        imgs[index].classList.add('active' + suffix)
+        syncThumbs(index)
+        currentIndex = index
+
+        setTimeout(function () {
+            settleCurrent(currentIndex)
+            startAutoplay()
+        }, animationTime)
+    }
 
     function showPrev() {
-        throthling(-1)
+        goTo(currentIndex - 1, -1)
     }
     function showNext() {
-        throthling(1)
+        goTo(currentIndex + 1, 1)
     }
-    function switchImage(tag) {
-        var nextIndex = (currentIndex + tag + totalImage) % totalImage
-        var currentImg = imgs[currentIndex]
-        function str(param) {
-            return param === -1 ? '2' : ''
-        }
-        for (var i = 0; i < totalImage; i++) {
-            imgs[i].classList.remove('active', 'active2', 'prev', 'prev2')
-            listImgs[i].classList.remove('active')
-        }
-        currentImg.classList.add('prev' + str(tag))
-        imgs[nextIndex].classList.add('active' + str(tag))
-        listImgs[nextIndex].classList.add('active')
-        currentIndex = nextIndex
-    }
-    function throthling(tag) {
-        if (isRunning) return
-        switchImage(tag)
-        clearInterval(timer)
-        timer = setInterval(showNext, interval)
-        isRunning = true
-        setTimeout(function () {
-            isRunning = false
-        }, animationTime)
+
+    function startCarousel() {
+        if (started) return
+        started = true
+        settleCurrent(0)
+        if (isInView) startAutoplay()
     }
 
     if (btnPrev) btnPrev.addEventListener('click', showPrev)
     if (btnNext) btnNext.addEventListener('click', showNext)
 
-    imgs[0].classList.add('active')
-    listImgs[0].classList.add('active')
-    timer = setInterval(showNext, interval)
+    for (var t = 0; t < listImgs.length; t++) {
+        ;(function (idx) {
+            listImgs[idx].addEventListener('click', function () {
+                goTo(idx)
+            })
+        })(t)
+    }
+
+    carouselRoot.addEventListener('mouseenter', function () {
+        isHovering = true
+        clearInterval(timer)
+    })
+    carouselRoot.addEventListener('mouseleave', function () {
+        isHovering = false
+        if (!isRunning) startAutoplay()
+    })
+
+    // 图片 AJAX 注入完成后启动；已有 src 时（无懒加载）直接启动
+    window.addEventListener('carousel:ready', startCarousel)
+    var hasSrc = false
+    for (var s = 0; s < imgs.length; s++) {
+        if (imgs[s].getAttribute('src')) { hasSrc = true; break }
+    }
+    if (hasSrc) startCarousel()
+
+    if ('IntersectionObserver' in window && sectionLun) {
+        var carouselIO = new IntersectionObserver(function (entries) {
+            var entry = entries[0]
+            isInView = !!(entry && entry.isIntersecting)
+            if (isInView) startAutoplay()
+            else stopAutoplay()
+        }, { threshold: 0.15 })
+        carouselIO.observe(sectionLun)
+    } else {
+        isInView = true
+    }
 }

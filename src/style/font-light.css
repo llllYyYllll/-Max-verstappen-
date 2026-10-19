@@ -14,14 +14,17 @@
     filter: drop-shadow(0 0 28px oklch(0.62 0.18 250 / 0.22));
 }
 
-/* Legacy / History */
+/* Legacy / History：关闭渐变字效，使用普通实色 */
 .section3 .headline {
-    background-image: radial-gradient(in oklch circle at 50% var(--gy),
-            oklch(0.95 0.12 200) 0vh,
-            oklch(0.75 0.25 220) 50vh,
-            oklch(0.40 0.20 280) 90vh,
-            oklch(0.15 0.08 260 / 0) 150vh);
-    filter: drop-shadow(0 0 26px oklch(0.7 0.16 220 / 0.2));
+    background-image: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    color: var(--text-light, #fff) !important;
+    filter: none !important;
+}
+
+.section3 .s3-year.headline {
+    color: var(--accent-color, #ffcc00) !important;
 }
 
 /* RB26 module */
@@ -34,14 +37,19 @@
     filter: drop-shadow(0 0 30px oklch(0.65 0.18 250 / 0.28));
 }
 
-/* Race countdown — 蓝金光感，与全站 accent 对齐 */
+/* Race countdown — 红 / 橘 / 金，贴合红牛赛车气质 */
 .race-time-section .headline {
     background-image: radial-gradient(in oklch circle at 50% var(--gy),
-            oklch(0.94 0.16 110) 0vh,
-            oklch(0.78 0.2 85) 40vh,
-            oklch(0.55 0.22 250) 90vh,
-            oklch(0.18 0.08 260 / 0) 150vh);
-    filter: drop-shadow(0 0 28px oklch(0.82 0.16 95 / 0.28));
+            oklch(0.92 0.2 95) 0vh,
+            oklch(0.78 0.22 55) 35vh,
+            oklch(0.62 0.24 25) 70vh,
+            oklch(0.45 0.2 15) 110vh,
+            oklch(0.18 0.08 260 / 0) 160vh);
+    filter: drop-shadow(0 0 26px oklch(0.7 0.2 35 / 0.28));
+}
+
+#life .headline {
+    filter: drop-shadow(0 0 22px oklch(0.68 0.2 45 / 0.25)) drop-shadow(0 0 26px oklch(0.65 0.16 240 / 0.14));
 }
 
 /* Off-track carousel */

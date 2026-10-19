@@ -6,6 +6,11 @@
     /* Racing Red 强调红 */
     --accent-color: #FFCC00;
     /* Cyber Yellow 点缀黄 */
+    --amber-hot: #FF9F1A;
+    /* 橘黄：能量过渡色 */
+    --racing-red: #DB0A30;
+    /* 更深赛车红 */
+    --racing-red-deep: #9B001C;
     --navy-dark: #0A1628;
     /* 深海军蓝 背景 */
     --navy-mid: #001B3D;
@@ -14,6 +19,8 @@
     /* 区块中段微抬升 */
     --page-bg: #0A1628;
     /* 全站内容区统一底色，接缝同色无黑带 */
+    --seam-bg: #122848;
+    /* banner 底 / about 顶共用，保证跨页同色 */
     --light-blue: #4C8BE3;
     /* 浅蓝 悬停/高亮 */
     --silver: #C0BFBF;
@@ -25,8 +32,15 @@
 
     --glow-blue: rgba(54, 113, 198, 0.28);
     --glow-blue-soft: rgba(80, 140, 220, 0.16);
-    --glow-gold: rgba(255, 204, 0, 0.18);
+    --glow-gold: rgba(255, 204, 0, 0.22);
+    --glow-red: rgba(232, 0, 45, 0.28);
+    --glow-amber: rgba(255, 159, 26, 0.22);
     --edge-light: rgba(180, 220, 255, 0.35);
+
+    /* 品牌渐变：红 → 橘 → 金 */
+    --grad-fire: linear-gradient(90deg, var(--racing-red) 0%, var(--amber-hot) 48%, var(--accent-color) 100%);
+    --grad-fire-soft: linear-gradient(135deg, rgba(232, 0, 45, 0.85), rgba(255, 159, 26, 0.75), rgba(255, 204, 0, 0.7));
+    --grad-fire-vert: linear-gradient(180deg, var(--racing-red) 0%, var(--amber-hot) 55%, var(--accent-color) 100%);
 
     /* 首页退场：由 .banner.is-exited 触发，JS 只负责开关 class */
     --banner-exit-duration: 900ms;
@@ -129,69 +143,126 @@ html {
 }
 
 .header {
-    /* border: 2px solid rgb(255, 0, 0); */
-    background-image: linear-gradient(to right,
-            rgba(4, 10, 20, 0.72) 0%,
-            rgba(16, 36, 71, 0.55) 32%,
-            rgba(26, 68, 127, 0.28) 58%,
-            rgba(12, 51, 102, 0.504) 80%,
-            rgba(24, 88, 172, 0.524) 90%);
-    /* background-color: var(--navy-dark); */
-    /* animation: header 0.6s ease-in-out; */
     position: relative;
     z-index: 200;
+    background: rgba(6, 12, 24, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 -2px 0 0 var(--accent-color);
     transition: transform var(--banner-exit-duration) var(--banner-exit-ease);
-    box-shadow: 0 18px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header nav ul {
-    /* border: 3px solid blue; */
-    list-style-type: none;
+.header__nav {
+    width: 100%;
+}
+
+.header__list {
+    list-style: none;
+    margin: 0;
+    padding: 0 clamp(1rem, 3vw, 2.75rem);
+    min-height: 64px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 7.5vh;
+    gap: clamp(0.35rem, 1.2vw, 1.1rem);
 }
 
-.header nav ul li {
-    flex: 1;
+.header__brand {
+    margin-right: auto;
+    flex: 0 0 auto;
 }
 
-.header nav ul li:first-child {
-    flex: 4;
-    /* border: 2px solid green; */
-    /* font-size: 20px; */
-    position: relative;
-    top: 4px;
-}
-
-.header nav ul li img {
-    width: 25%;
-}
-
-.header nav ul li:last-child {
-    /* border: 2px solid rgb(0, 234, 255); */
-    flex: 0;
-}
-
-.header nav ul li a {
-    /* border: 2px solid red; */
-    font-size: 40px;
+.header__brand a {
+    display: inline-flex;
+    align-items: center;
+    line-height: 0;
     text-decoration: none;
-    color: #FFFFFF;
-    font-family: "aeromovedemo";
+}
+
+.header__brand img {
+    display: block;
+    width: clamp(110px, 14vw, 168px);
+    height: auto;
+    transition: opacity 0.2s ease;
+}
+
+.header__brand a:hover img {
+    opacity: 0.85;
+}
+
+.header__list > li:not(.header__brand) {
+    flex: 0 0 auto;
+    /* gap: 5rem; */
+}
+
+.header__list > li:not(.header__brand) > a {
     position: relative;
-    top: 7px;
+    display: inline-block;
+    padding: 0.55rem 2.5rem;
+    font-family: "vipnagorgialla", "aeromovedemo", system-ui, sans-serif;
+    font-size: clamp(0.78rem, 1.35vw, 0.95rem);
+    font-weight: lighter;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.86);
+    transition: color 0.2s ease;
+}
+
+.header__list > li:not(.header__brand) > a::after {
+    content: "";
+    position: absolute;
+    left: 0.2rem;
+    right: 0.2rem;
+    bottom: 0.2rem;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.22s ease;
+}
+
+.header__list > li:not(.header__brand) > a:hover,
+.header__list > li:not(.header__brand) > a:focus-visible {
+    color: #fff;
+}
+
+.header__list > li:not(.header__brand) > a:hover::after,
+.header__list > li:not(.header__brand) > a:focus-visible::after {
+    transform: scaleX(1);
+}
+
+@media (max-width: 720px) {
+    .header__list {
+        min-height: 56px;
+        padding: 0 0.85rem;
+        gap: 0.2rem;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .header__list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .header__brand {
+        margin-right: 0.75rem;
+    }
+
+    .header__list > li:not(.header__brand) > a {
+        padding: 0.45rem 0.15rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+    }
 }
 
 .banner {
-    /* 品牌蓝横向渐变；底部淡入 #122848，与 .about 顶部同色，无黑带 */
     background-image:
         linear-gradient(
             180deg,
-            transparent 58%,
-            rgba(18, 40, 72, 0.55) 80%,
-            #122848 100%
+            transparent 50%,
+            rgba(18, 40, 72, 0.45) 72%,
+            var(--seam-bg) 92%,
+            var(--seam-bg) 100%
         ),
         linear-gradient(to left, var(--navy-dark), var(--navy-mid), #1b437c, #3471c6);
     min-height: 110vh;
@@ -200,6 +271,24 @@ html {
     position: relative;
     overflow: hidden;
     border: none;
+}
+
+/* 首页雾气触底前收淡，与 About 顶雾衔接 */
+.banner > .fog {
+    -webkit-mask-image: linear-gradient(
+        180deg,
+        #000 0%,
+        #000 62%,
+        rgba(0, 0, 0, 0.45) 78%,
+        transparent 90%
+    );
+    mask-image: linear-gradient(
+        180deg,
+        #000 0%,
+        #000 62%,
+        rgba(0, 0, 0, 0.45) 78%,
+        transparent 90%
+    );
 }
 
 .banner .fliter {
@@ -395,19 +484,93 @@ html {
     gap: 48px 100px;
     padding: 9% 8% 9% 8%;
     isolation: isolate;
-    /* 顶部承接 banner 余蓝，再回到统一 page-bg */
+    overflow: hidden;
+    margin-top: -2px;
     background: linear-gradient(
         180deg,
-        #122848 0%,
-        var(--page-bg) 22%,
+        var(--seam-bg) 0%,
+        var(--seam-bg) 28%,
+        var(--page-bg) 70%,
         var(--page-bg) 100%
     );
     border: none;
 }
 
+/* About 雾气：与首页同素材/滤镜/动画，顶部纯色对接后向下渐隐 */
+#about > .about-fog {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+    filter: blur(1px) grayscale(0.2) saturate(1.2) sepia(0.2);
+    -webkit-mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 8%,
+        rgba(0, 0, 0, 0.35) 18%,
+        rgba(0, 0, 0, 0.65) 32%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0.12) 75%,
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 8%,
+        rgba(0, 0, 0, 0.35) 18%,
+        rgba(0, 0, 0, 0.65) 32%,
+        rgba(0, 0, 0, 0.4) 55%,
+        rgba(0, 0, 0, 0.12) 75%,
+        transparent 100%
+    );
+}
 
+#about .about-foglayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200%;
+}
 
+#about .about-foglayer .image01,
+#about .about-foglayer .image02 {
+    float: left;
+    height: 100%;
+    width: 50%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
 
+#about .about-foglayer--1 {
+    animation: foglayer_01_opacity 10s linear infinite, foglayer_moveme 15s linear infinite;
+}
+
+#about .about-foglayer--2,
+#about .about-foglayer--3 {
+    animation: foglayer_02_opacity 21s linear infinite, foglayer_moveme 13s linear infinite;
+}
+
+#about .about-foglayer--1 .image01,
+#about .about-foglayer--1 .image02 {
+    background-image: url("https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog1.png");
+}
+
+#about .about-foglayer--2 .image01,
+#about .about-foglayer--2 .image02,
+#about .about-foglayer--3 .image01,
+#about .about-foglayer--3 .image02 {
+    background-image: url("https://raw.githubusercontent.com/danielstuart14/CSS_FOG_ANIMATION/master/fog2.png");
+}
+
+#about > .about-tilt-wrap,
+#about > .imgmax {
+    position: relative;
+    z-index: 3;
+}
 
 .about .content_01 {
     max-width: 850px;
@@ -898,7 +1061,7 @@ em {
     }
 
     .section3-hint::after {
-        content: " · 点击节点查看详情";
+        content: " · Tap a node for details";
     }
 
     .section3 .s3-timeline {
@@ -1181,7 +1344,7 @@ em {
 }
 
 .glass-copy__eyebrow {
-    font-family: "mondo", sans-serif;
+    font-family: "vipnagorgialla", sans-serif;
     font-size: clamp(11px, 1.05vw, 15px);
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -1191,7 +1354,7 @@ em {
 }
 
 .glass-copy__mark {
-    font-family: "aeromovedemo", sans-serif;
+    font-family: "Freshman", sans-serif;
     font-size: clamp(64px, 12vw, 168px);
     font-weight: 400;
     line-height: 0.86;
@@ -1201,7 +1364,7 @@ em {
 }
 
 .glass-copy__sub {
-    font-family: "mondo", sans-serif;
+    font-family: "vipnagorgialla", sans-serif;
     font-size: clamp(14px, 1.35vw, 22px);
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -1319,7 +1482,7 @@ em {
     height: var(--index-height, auto);
     overflow: var(--index-overflow, visible);
     text-align: var(--index-align, left);
-    font-family: "mondo";
+    font-family: "vipnagorgialla", sans-serif;
     font-size: var(--index-size, clamp(13px, 1.2vw, 16px));
     letter-spacing: var(--index-tracking, 0.14em);
     line-height: var(--index-leading, 1.2);
@@ -1337,7 +1500,7 @@ em {
     height: var(--title-height, auto);
     overflow: var(--title-overflow, visible);
     text-align: var(--title-align, left);
-    font-family: "aeromovedemo";
+    font-family: "Freshman", sans-serif;
     font-size: var(--title-size, clamp(28px, 3.2vw, 44px));
     font-weight: 400;
     line-height: var(--title-leading, 1.05);
@@ -1362,7 +1525,7 @@ em {
     height: var(--body-height, auto);
     overflow: var(--body-overflow, visible);
     text-align: var(--body-align, left);
-    font-family: "mondo";
+    font-family: "vipnagorgialla", sans-serif;
     font-size: var(--body-size, clamp(12px, 1.05vw, 15px));
     line-height: var(--body-leading, 1.5);
     color: var(--body-color, rgba(255, 255, 255, 0.9));
@@ -1376,7 +1539,7 @@ em {
     bottom: 6%;
     z-index: 5;
     transform: translateX(-50%);
-    font-family: "mondo";
+    font-family: "vipnagorgialla", sans-serif;
     font-size: 18px;
     letter-spacing: 0.08em;
     color: #FFFFFF;
@@ -1486,7 +1649,7 @@ em {
     --carousel-ease: cubic-bezier(0.22, 1, 0.36, 1);
     max-width: min(1080px, 88%);
     width: 100%;
-    height: clamp(520px, 72vh, 720px);
+    height: clamp(780px, 96vh, 1080px);
     display: flex;
     flex-direction: column;
     gap: 18px;
@@ -1546,24 +1709,37 @@ em {
     height: 100%;
     position: absolute;
     inset: 0;
+    z-index: 0;
     object-fit: cover;
-    object-position: center;
+    object-position: center top;
     opacity: 0;
-    transform: translateX(100%);
+    transform: translateX(0);
+    pointer-events: none;
     will-change: transform, opacity;
+}
+
+/* 静止展示态（动画结束后保持可见） */
+.carousel .carousel-box .is-current {
+    opacity: 1;
+    transform: translateX(0);
+    z-index: 1;
 }
 
 /* 切图动画 */
 .carousel .carousel-box .active {
+    z-index: 2;
     animation: slideInLeft 0.85s var(--carousel-ease) forwards;
 }
 .carousel .carousel-box .prev {
+    z-index: 1;
     animation: slideOutLeft 0.85s var(--carousel-ease) forwards;
 }
 .carousel .carousel-box .active2 {
+    z-index: 2;
     animation: slideInRight 0.85s var(--carousel-ease) forwards;
 }
 .carousel .carousel-box .prev2 {
+    z-index: 1;
     animation: slideOutRight 0.85s var(--carousel-ease) forwards;
 }
 
@@ -1618,6 +1794,9 @@ em {
     z-index: 5;
     width: 46px;
     height: 46px;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
     border-radius: 50%;
     cursor: pointer;
     border: 1px solid rgba(180, 210, 255, 0.28);
@@ -1742,7 +1921,7 @@ em {
 
     .carousel {
         max-width: 94%;
-        height: clamp(420px, 68vh, 560px);
+        height: clamp(600px, 88vh, 860px);
         gap: 14px;
     }
 
@@ -1905,3 +2084,253 @@ em {
         letter-spacing: 0.1em;
     }
 }
+
+
+/* section1样式开始 */
+@keyframes section1-rise {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section1 {
+    position: relative;
+    width: 100%;
+    min-height: 880px;
+    padding: 72px 0 72px;
+    box-sizing: border-box;
+    isolation: isolate;
+    overflow: hidden;
+    margin-top: -1px;
+    /* 整段实底与 Race 同色；光晕用伪元素且顶部裁掉，消除左上接缝 */
+    background: var(--page-bg);
+}
+
+.section1::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse 70% 50% at 18% 78%, rgba(54, 113, 198, 0.14), transparent 62%),
+        radial-gradient(ellipse 48% 38% at 88% 70%, rgba(255, 204, 0, 0.045), transparent 55%);
+    -webkit-mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 22%,
+        rgba(0, 0, 0, 0.55) 42%,
+        #000 62%,
+        #000 100%
+    );
+    mask-image: linear-gradient(
+        180deg,
+        transparent 0%,
+        transparent 22%,
+        rgba(0, 0, 0, 0.55) 42%,
+        #000 62%,
+        #000 100%
+    );
+}
+
+.section1 .section-lun-head {
+    position: relative;
+    z-index: 1;
+    animation: section1-rise 0.9s var(--banner-exit-ease) both;
+}
+
+.section1 .about {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    display: block;
+    min-height: 0;
+    padding: 0;
+    gap: 0;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    background: transparent;
+    background-image: none;
+    color: var(--text-light);
+    margin-top: 0;
+    overflow: visible;
+}
+
+.section1 .about .content_01 {
+    width: min(1100px, 90%);
+    height: auto;
+    max-width: none;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    animation: section1-rise 1s var(--banner-exit-ease) 0.12s both;
+}
+
+.section1 .about .content_01 .left,
+.section1 .about .content_01 .right {
+    width: 48%;
+    min-height: 560px;
+    position: relative;
+}
+
+.section1 .about .content_01 .left {
+    background-image: url("../img/life_ver/f91034d3a8c142940ca494b6d27ec3d7.png");
+    background-size: cover;
+    background-position: center 20%;
+    border-radius: 4px;
+    box-shadow:
+        inset 0 0 0 1px rgba(180, 210, 255, 0.18),
+        0 0 48px rgba(54, 113, 198, 0.16),
+        0 24px 48px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+.section1 .about .content_01 .left::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(90deg, transparent 55%, rgba(10, 22, 40, 0.55) 100%),
+        linear-gradient(180deg, transparent 70%, rgba(10, 22, 40, 0.35) 100%);
+}
+
+.section1 .about .content_01 .right .box {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-12%, -50%);
+    width: 112%;
+    min-height: 78%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+    padding: clamp(28px, 4vw, 48px);
+    box-sizing: border-box;
+    border-radius: 4px;
+    /* 最简毛玻璃：半透明底 + 模糊 */
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.section1 .about .content_01 .right .box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-color) 30%,
+        var(--light-blue) 70%,
+        transparent
+    );
+    box-shadow: 0 0 18px var(--glow-gold);
+}
+
+.section1 .box__title {
+    margin: 0;
+    font-family: "vipnagorgialla", sans-serif;
+    font-weight: lighter;
+    font-size: clamp(28px, 3.2vw, 38px);
+    letter-spacing: 0.02em;
+    color: var(--text-light);
+    line-height: 1.15;
+}
+
+.section1 .box__quote {
+    margin: 0;
+    font-family: "vipnagorgialla", sans-serif;
+    font-size: clamp(15px, 1.5vw, 17px);
+    font-weight: lighter;
+    font-style: normal;
+    line-height: 1.55;
+    letter-spacing: 0.01em;
+    color: var(--navy-dark);
+    padding: 18px 20px;
+    border-left: 3px solid var(--accent-color);
+    background: linear-gradient(
+        120deg,
+        rgba(198, 214, 236, 0.95) 0%,
+        rgba(120, 150, 190, 0.88) 100%
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.section1 .box__body {
+    margin: 0;
+    color: rgba(232, 240, 255, 0.9);
+    font-family: "kaluk", sans-serif;
+    font-size: clamp(14px, 1.35vw, 16px);
+    font-weight: lighter;
+    line-height: 1.7;
+    text-indent: 0;
+}
+
+@media (max-width: 900px) {
+    .section1 {
+        min-height: 0;
+        padding: 48px 0 56px;
+    }
+
+    .section1 .about .content_01 {
+        width: min(640px, 92%);
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .section1 .about .content_01 .left,
+    .section1 .about .content_01 .right {
+        width: 100%;
+        min-height: 0;
+    }
+
+    .section1 .about .content_01 .left {
+        height: clamp(280px, 48vw, 380px);
+        border-radius: 4px 4px 0 0;
+    }
+
+    .section1 .about .content_01 .left::after {
+        background: linear-gradient(180deg, transparent 45%, rgba(10, 22, 40, 0.75) 100%);
+    }
+
+    .section1 .about .content_01 .right .box {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        min-height: 0;
+        margin-top: -36px;
+        padding: 28px 24px 32px;
+        gap: 18px;
+        border-radius: 0 0 4px 4px;
+    }
+}
+
+@media (max-width: 560px) {
+    .section1 .box__quote {
+        padding: 14px 16px;
+    }
+}
+/* section1样式结束 */

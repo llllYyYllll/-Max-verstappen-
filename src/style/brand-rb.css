@@ -1,0 +1,313 @@
+/**
+ * Red Bull Racing — 红 / 橘黄品牌层
+ *（已去除：首页速度条、接缝火线、History 字体特效）
+ */
+
+/* ---------- 全局 ---------- */
+::selection {
+    background: rgba(232, 0, 45, 0.88);
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #060d18;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--racing-red), var(--amber-hot));
+    border-radius: 999px;
+}
+
+html {
+    scrollbar-color: var(--amber-hot) #060d18;
+}
+
+body {
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.05;
+    background:
+        repeating-linear-gradient(
+            -18deg,
+            transparent 0 14px,
+            rgba(255, 204, 0, 0.55) 14px 15px,
+            transparent 15px 28px,
+            rgba(232, 0, 45, 0.4) 28px 29px,
+            transparent 29px 48px
+        );
+}
+
+/* ---------- Header ---------- */
+.header {
+    background:
+        linear-gradient(90deg, rgba(155, 0, 28, 0.35) 0%, transparent 28%),
+        rgba(6, 12, 24, 0.92) !important;
+    box-shadow: none !important;
+    border-bottom: none !important;
+}
+
+.header::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: var(--grad-fire);
+}
+
+.header__list > li:not(.header__brand) > a::after {
+    background: var(--grad-fire) !important;
+    height: 2px !important;
+}
+
+.header__list > li:not(.header__brand) > a:hover,
+.header__list > li:not(.header__brand) > a:focus-visible {
+    color: var(--accent-color) !important;
+}
+
+/* ---------- 非 History 区块 kicker ---------- */
+.section-lun-kicker,
+.race-time-section__kicker {
+    position: relative;
+    display: inline-block;
+    background: var(--grad-fire);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    text-shadow: none !important;
+    letter-spacing: 0.22em !important;
+}
+
+.section-lun-kicker::before,
+.section-lun-kicker::after,
+.race-time-section__kicker::before,
+.race-time-section__kicker::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 28px;
+    height: 1px;
+    background: var(--grad-fire);
+    opacity: 0.85;
+}
+
+.section-lun-kicker::before,
+.race-time-section__kicker::before {
+    right: calc(100% + 12px);
+}
+
+.section-lun-kicker::after,
+.race-time-section__kicker::after {
+    left: calc(100% + 12px);
+}
+
+.section-lun-head,
+.race-time-section__head {
+    position: relative;
+}
+
+.section-lun-head::after,
+.race-time-section__head::after {
+    content: "";
+    display: block;
+    width: min(120px, 28vw);
+    height: 2px;
+    margin: 16px auto 0;
+    background: var(--grad-fire);
+    border-radius: 2px;
+    opacity: 0.9;
+}
+
+/* ---------- About ---------- */
+#about .content_01 {
+    border-color: rgba(255, 159, 26, 0.22) !important;
+    box-shadow:
+        -3px 0 0 0 var(--racing-red),
+        0 0 0 1px rgba(255, 204, 0, 0.08),
+        0 16px 40px rgba(0, 0, 0, 0.28) !important;
+}
+
+#about > .imgmax {
+    box-shadow:
+        4px 0 0 0 var(--amber-hot),
+        8px 0 0 0 rgba(232, 0, 45, 0.55),
+        0 16px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ---------- RB26 Module ---------- */
+.module {
+    background:
+        linear-gradient(180deg, transparent 0%, rgba(232, 0, 45, 0.06) 50%, transparent 100%),
+        linear-gradient(
+            180deg,
+            var(--page-bg) 0%,
+            #0c1528 40%,
+            var(--page-bg) 100%
+        ) !important;
+}
+
+.module::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--grad-fire);
+    opacity: 0.75;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.glass-copy__eyebrow {
+    color: var(--amber-hot) !important;
+}
+
+.glass-copy__sub {
+    color: rgba(255, 204, 0, 0.75) !important;
+}
+
+.module-hint {
+    color: rgba(255, 200, 140, 0.7) !important;
+}
+
+.module-info__index {
+    color: var(--racing-red) !important;
+}
+
+/* ---------- Life 区块 ---------- */
+.section1::before {
+    background:
+        radial-gradient(ellipse 70% 50% at 18% 78%, rgba(232, 0, 45, 0.12), transparent 62%),
+        radial-gradient(ellipse 55% 42% at 82% 70%, rgba(255, 159, 26, 0.1), transparent 58%),
+        radial-gradient(ellipse 48% 38% at 50% 90%, rgba(54, 113, 198, 0.1), transparent 55%) !important;
+}
+
+.section1 .about .content_01 .left {
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 159, 26, 0.22),
+        -3px 0 0 0 var(--racing-red),
+        0 24px 48px rgba(0, 0, 0, 0.35) !important;
+}
+
+.section1 .about .content_01 .right .box {
+    border-color: rgba(255, 159, 26, 0.28) !important;
+    box-shadow:
+        0 0 0 1px rgba(232, 0, 45, 0.12),
+        0 20px 48px rgba(0, 0, 0, 0.4) !important;
+}
+
+.section1 .box__title {
+    background: var(--grad-fire);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+
+.section1 .box__quote {
+    border-left-color: var(--racing-red) !important;
+    color: rgba(255, 220, 170, 0.92) !important;
+}
+
+/* ---------- 轮播 ---------- */
+.section-lun {
+    position: relative;
+    background:
+        linear-gradient(180deg, rgba(232, 0, 45, 0.04), transparent 30%),
+        var(--page-bg) !important;
+}
+
+.carousel .carousel-box .btn-prev,
+.carousel .carousel-box .btn-next {
+    border-color: rgba(255, 159, 26, 0.45) !important;
+    background: rgba(10, 22, 40, 0.72) !important;
+}
+
+.carousel .carousel-box .btn-prev:hover,
+.carousel .carousel-box .btn-next:hover {
+    background: rgba(232, 0, 45, 0.4) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.carousel .carousel-list .active,
+.carousel .carousel-list img.active {
+    outline: 2px solid var(--amber-hot);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 1px rgba(232, 0, 45, 0.55);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+    background:
+        linear-gradient(180deg, var(--page-bg) 0%, #0a101c 55%, #12060a 100%) !important;
+    border-top: none !important;
+}
+
+.site-footer::before {
+    height: 2px !important;
+    background: var(--grad-fire) !important;
+    box-shadow: none !important;
+    width: min(520px, 78%) !important;
+}
+
+.site-footer__nav a::after {
+    background: var(--grad-fire) !important;
+    height: 2px !important;
+}
+
+.site-footer__nav a:hover {
+    color: var(--accent-color) !important;
+}
+
+.site-footer__tagline {
+    background: var(--grad-fire);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+
+.site-footer__copy {
+    border-top: 1px solid rgba(255, 159, 26, 0.12);
+    padding-top: 14px;
+}
+
+#rb26,
+#race-countdown,
+#life,
+.section-lun {
+    scroll-margin-top: 12px;
+}
+
+@keyframes rb-fire-shift {
+    0%, 100% { filter: hue-rotate(0deg) brightness(1); }
+    50% { filter: hue-rotate(-6deg) brightness(1.08); }
+}
+
+.header::after,
+.section-lun-head::after,
+.race-time-section__head::after,
+.site-footer::before {
+    animation: rb-fire-shift 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header::after,
+    .section-lun-head::after,
+    .race-time-section__head::after,
+    .site-footer::before {
+        animation: none;
+    }
+}

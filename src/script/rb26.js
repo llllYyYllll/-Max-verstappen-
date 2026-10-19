@@ -18,8 +18,8 @@ const scene = new THREE.Scene()
  * 可见背景改由 CSS 平滑渐变承担，避免侧视时 equirect「一整条同色」发死
  */
 function createBlueStudioEquirect() {
-    const w = 2048
-    const h = 1024
+    const w = 1024
+    const h = 512
     const c = document.createElement('canvas')
     c.width = w
     c.height = h
@@ -190,7 +190,7 @@ scene.add(hemiLight)
 
 const directionalLight = new THREE.DirectionalLight(0xc8dcff, 1.0)
 directionalLight.castShadow = true
-directionalLight.shadow.mapSize.set(2048, 2048)
+directionalLight.shadow.mapSize.set(1024, 1024)
 directionalLight.shadow.camera.far = 40
 directionalLight.shadow.camera.left = -8
 directionalLight.shadow.camera.top = 8
@@ -258,7 +258,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix()
     if (!renderer) return
     renderer.setSize(sizes.width, sizes.height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
 })
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
@@ -1379,7 +1379,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap
 renderer.toneMapping = THREE.ACESFilmicToneMapping
 renderer.toneMappingExposure = 1.22
 renderer.setSize(sizes.width, sizes.height)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
 applyShotLighting(0, null)
 
 /**
@@ -1413,11 +1413,46 @@ lightsFolder.add(detailLightA, 'intensity').min(0).max(4).step(0.01).name('detai
 lightsFolder.add(detailLightB, 'intensity').min(0).max(4).step(0.01).name('detail B')
 
 /**
- * ========== 循环 ==========
+ * ========== 循环（仅在模块进入视口时渲染，离开即暂停） ==========
  */
+let isModuleVisible = false
+let rafId = null
+
 const tick = () => {
+    if (!isModuleVisible) {
+        rafId = null
+        return
+    }
     if (controls.enabled && !isShotAnimating) controls.update()
     renderer.render(scene, camera)
-    window.requestAnimationFrame(tick)
+    rafId = window.requestAnimationFrame(tick)
 }
-tick()
+
+function startRenderLoop() {
+    if (isModuleVisible) return
+    isModuleVisible = true
+    if (rafId == null) rafId = window.requestAnimationFrame(tick)
+}
+
+function stopRenderLoop() {
+    isModuleVisible = false
+    if (rafId != null) {
+        window.cancelAnimationFrame(rafId)
+        rafId = null
+    }
+}
+
+const moduleSection = document.querySelector('#rb26') || canvas
+if ('IntersectionObserver' in window && moduleSection) {
+    const renderIO = new IntersectionObserver(
+        (entries) => {
+            const entry = entries[0]
+            if (entry && entry.isIntersecting) startRenderLoop()
+            else stopRenderLoop()
+        },
+        { threshold: 0.05, rootMargin: '80px 0px' }
+    )
+    renderIO.observe(moduleSection)
+} else {
+    startRenderLoop()
+}
